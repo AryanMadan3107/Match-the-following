@@ -71,6 +71,8 @@ screen.blit(rl,rlrect)
 
 
 matches=[(ccrect,cctextrect),(lrect,ltextrect),(ssrect,sstextrect),(trrect,trtextrect),(rlrect,rltextrect)]
+matchedrect=[]
+
 
 startpos=None
 endpos=None
@@ -88,7 +90,7 @@ while run:
             startpos=pygame.mouse.get_pos()
             clicked_on_valid_area=False
             for irect,trect in matches:
-                if irect.collidepoint(startpos):
+                if irect.collidepoint(startpos) and irect not in matchedrect:
                     clicked_on_valid_area=True
                     startrect=irect
                     break
@@ -108,6 +110,7 @@ while run:
                 correct=False
                 for irect,trect in matches:
                     if irect == startrect and trect == endrect:
+                        matchedrect.append(irect)
                         pygame.draw.line(screen,"green",startpos,endpos,5)
                         correct=True
                         score+=1
